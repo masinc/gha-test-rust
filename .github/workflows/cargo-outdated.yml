@@ -20,6 +20,9 @@ jobs:
       with:
         path: ~/.cargo/bin/
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('*') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ env.cache-name }}-
+          ${{ runner.os }}-
     - run: cargo install cargo-outdated
       if: ${{ steps.cache-cargo.outputs.cache-hit != 'true' }}
     - run: which cargo-outdated
