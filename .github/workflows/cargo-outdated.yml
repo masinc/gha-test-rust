@@ -18,6 +18,6 @@ jobs:
     - id: cargo-outdated
       run: cargo outdated --exit-code 1
       continue-on-error: true
-    - run: echo ${{ needs.outdated.cargo-outdated.outputs }}
-      if: ${{ needs.outdated.result == 'failure' }}
+    - run: echo ${{ steps.cargo-outdated.outputs }}
+      if: ${{ steps.cargo-outdated.outcome == 'failure' }}
     
