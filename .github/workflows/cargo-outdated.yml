@@ -24,6 +24,13 @@ jobs:
         echo "::set-output name=stdout::$output"
         cargo outdated --exit-code 1
       continue-on-error: true
-    - run: echo "${{ steps.outdated.outputs.stdout }}"
-      if: ${{ steps.outdated.outcome == 'failure' }}
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      uses: Ilshidur/action-discord@master
+      with:
+        args: |
+          project: {{ EVENT_PAYLOAD.repository.full_name }}
+          {{ steps.outdated.outputs.stdout }}
+        if: ${{ steps.outdated.outcome == 'failure' }}
     
