@@ -1,4 +1,4 @@
-name: Cargo Oudated
+name: Cargo Outdated
 
 on:
   workflow_dispatch:
@@ -11,19 +11,13 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  cargo-outdated:
-    runs-on: ubuntu-latest
+  outdated:
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-    - id: cache-cargo
-      uses: actions/cache@v3
-      with:
-        path: ~/.cargo/bin/
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('*') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ env.cache-name }}-
-          ${{ runner.os }}-
-    - run: cargo install cargo-outdated
-      if: ${{ steps.cache-cargo.outputs.cache-hit != 'true' }}
-    - run: which cargo-outdated
-    - run: cargo outdated --exit-code 1
+    - id: cargo-outdated
+      run: cargo outdated --exit-code 1
+      continue-on-error: true
+    - run: echo ${{ needs.outdated.cargo-outdated.outputs }}
+      if: ${{ needs.outdated.result == 'failure' }}
+    
