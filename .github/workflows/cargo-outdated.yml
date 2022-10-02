@@ -24,6 +24,6 @@ jobs:
         echo "::set-output name=stdout::$output"
         cargo outdated --exit-code 1
       continue-on-error: true
-    - run: echo ${{ steps.outdated.outputs.stdout }}
+    - run: echo "${{ steps.outdated.outputs.stdout }}"
       if: ${{ steps.outdated.outcome == 'failure' }}
     
