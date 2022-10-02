@@ -23,6 +23,7 @@ jobs:
         npx zx <<'EOF'
           const content = (await $`cargo outdated -R`).toString();
           const resp = await fetch(process.env.DISCORD_WEBHOOK, {
+            method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
