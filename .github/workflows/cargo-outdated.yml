@@ -11,17 +11,15 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  cargo-outdated:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - id: cache-cargo
       uses: actions/cache@v3
       with:
-        path: |
-          .cargo/bin/
+        path: ~/.cargo/bin/
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('*') }}
     - run: cargo install cargo-outdated
       if: ${{ steps.cache-cargo.outputs.cache-hit != 'true' }}
     - run: which cargo-outdated
