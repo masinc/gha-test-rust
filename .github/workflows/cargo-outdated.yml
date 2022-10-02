@@ -23,6 +23,6 @@ jobs:
         echo "::set-output name=stdout::$output"        
         test $result -eq 0
       continue-on-error: true
-    - run: echo ${{ steps.cargo-outdated.outputs.output }}
+    - run: echo ${{ steps.cargo-outdated.outputs.stdout }}
       if: ${{ steps.cargo-outdated.outcome == 'failure' }}
     
