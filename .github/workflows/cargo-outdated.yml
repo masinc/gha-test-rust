@@ -30,8 +30,6 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@0.3.2
       with:
-        args: |
-          project: {{ EVENT_PAYLOAD.repository.full_name }}
-          ${{ steps.outdated.outputs.stdout }}
+        args: "project: {{ EVENT_PAYLOAD.repository.full_name }} \n${{ steps.outdated.outputs.stdout }}"
       if: ${{ steps.outdated.outcome == 'failure' }}
     
