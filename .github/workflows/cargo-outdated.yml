@@ -17,6 +17,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: cargo install
-    - run: cargo outdated
+    - run: cargo install cargo-outdated
     - run: cargo outdated --exit-code 1
