@@ -11,18 +11,19 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  outdated:
+  cargo-outdated:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-    - id: cargo-outdated
+    - id: outdated
       run: |
         output=$(cargo outdated --exit-code 1)
         result=$?
         output="${output//$'\n'/\\n}"
-        echo "::set-output name=stdout::$output"        
+        echo $output
+        echo "::set-output name=stdout::$output"
         test $result -eq 0
       continue-on-error: true
-    - run: echo ${{ steps.cargo-outdated.outputs.stdout }}
-      if: ${{ steps.cargo-outdated.outcome == 'failure' }}
+    - run: echo ${{ steps.outdated.outputs.stdout }}
+      if: ${{ steps.outdated.outcome == 'failure' }}
     
