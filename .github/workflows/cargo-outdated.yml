@@ -19,7 +19,7 @@ jobs:
       run: |
         output=$(cargo outdated --exit-code 1)
         result=$?
-        output="${output//$'\n'\\n}"
+        output="${output//$'\n'/\\n}"
         echo "::set-output name=stdout::$output"        
         test $result -eq 0
       continue-on-error: true
