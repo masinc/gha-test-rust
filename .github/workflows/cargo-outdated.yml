@@ -27,9 +27,10 @@ jobs:
       continue-on-error: true
     - name: Discord notification
       env:
+        DISCORD_USERNAME: ${{ EVENT_PAYLOAD.repository.full_name }}
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       uses: Ilshidur/action-discord@0.3.2
       with:
-        args: "```project: {{ EVENT_PAYLOAD.repository.full_name }} \n${{ steps.outdated.outputs.stdout }}```"
+        args: "```${{ steps.outdated.outputs.stdout }}```"
       if: ${{ steps.outdated.outcome == 'failure' }}
     
