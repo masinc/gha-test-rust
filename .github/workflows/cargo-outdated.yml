@@ -1,4 +1,4 @@
-name: Rust
+name: Cargo Oudated
 
 on:
   workflow_dispatch:
@@ -17,6 +17,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - id: cache-cargo
+      uses: actions/cache@v3
+      with:
+        path: |
+          .cargo/bin/
     - run: cargo install cargo-outdated
+      if: ${{ steps.cache-cargo.outputs.cache-hit != 'true' }}
     - run: which cargo-outdated
     - run: cargo outdated --exit-code 1
