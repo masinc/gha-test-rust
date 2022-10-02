@@ -32,6 +32,6 @@ jobs:
       with:
         args: |
           project: {{ EVENT_PAYLOAD.repository.full_name }}
-          {{ steps.outdated.outputs.stdout }}
+          ${{ steps.outdated.outputs.stdout }}
       if: ${{ steps.outdated.outcome == 'failure' }}
     
