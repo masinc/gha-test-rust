@@ -16,8 +16,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - id: cargo-outdated
-      run: cargo outdated --exit-code 1
+      run: |
+        output=$(cargo outdated --exit-code 1)
+        result=$?
+        output="${output//$'\n'\\n}"
+        echo "::set-output name=stdout::$output"        
+        test $result -eq 0
       continue-on-error: true
-    - run: echo ${{ steps.cargo-outdated.outputs }}
+    - run: echo ${{ steps.cargo-outdated.outputs.output }}
       if: ${{ steps.cargo-outdated.outcome == 'failure' }}
     
