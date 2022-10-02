@@ -22,7 +22,7 @@ jobs:
         output="${output//$'\n'/\\n}"
         echo $output
         echo "::set-output name=stdout::$output"
-        test $result -eq 0
+        echo test $result -eq 0
       continue-on-error: true
     - run: echo ${{ steps.outdated.outputs.stdout }}
       if: ${{ steps.outdated.outcome == 'failure' }}
